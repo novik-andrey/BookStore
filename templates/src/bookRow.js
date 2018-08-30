@@ -11,7 +11,8 @@ export default class BookRow extends React.Component {
         <div>name = {name}</div>
         <div>author = {author}</div>
         <div>pages = {pages}</div>
-        <div>price = {price}</div>
+        <div>price = {price}</div>  
+        <div><a>edit book</a></div>
       </div>
     )
   }

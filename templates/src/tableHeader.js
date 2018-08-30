@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchForm from './searchForm'
+import { Link } from 'react-router';
 
 export default class tableHeader extends React.Component {
 
@@ -8,7 +9,7 @@ export default class tableHeader extends React.Component {
     return(
       <header>
         <div>Book Store</div>
-        <div><button>New</button></div>
+        <li><Link to="/edit">New</Link></li>
         <div><SearchForm/></div>
       </header>
     )

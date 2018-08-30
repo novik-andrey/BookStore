@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, browserHistory } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux';
-import * as bookActions from './src/actions/index';
+import { routes } from './src/routes';
 import rootReducer from './src/reducers/index';
-import App from './src/app';
 
 const store = createStore(
   rootReducer,
@@ -13,11 +13,11 @@ const store = createStore(
     thunkMiddleware
   )
 )
-store.dispatch(bookActions.getBooks());
+// store.dispatch(bookActions.getBooks());
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <Router routes={routes} history={browserHistory} /> 
   </Provider>,
   document.getElementById('root')
 );
