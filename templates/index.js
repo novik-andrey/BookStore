@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { BrowserRouter, Route } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux';
-import { routes } from './src/routes';
+import App from './src/app';
+import AddBook from './src/addBook';
 import rootReducer from './src/reducers/index';
+import * as bookActions from './src/actions/index';
 
 const store = createStore(
   rootReducer,
@@ -13,11 +15,16 @@ const store = createStore(
     thunkMiddleware
   )
 )
-// store.dispatch(bookActions.getBooks());
+store.dispatch(bookActions.getBooks())
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router routes={routes} history={browserHistory} /> 
+    <BrowserRouter>
+      <div>
+        <Route exact path='/' component={App}/>
+        <Route path='/edit' component={AddBook}/>
+      </div>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

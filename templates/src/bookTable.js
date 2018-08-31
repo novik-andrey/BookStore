@@ -2,12 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BookRow from './bookRow.js';
 import bookFilter from './bookFilter';
-import * as bookActions from './actions/index';
 
 class BookTable extends React.Component {
-  componentDidMount() {
-    this.props.getBooks();
-  }
 
   render() {
     const {books} = this.props;
@@ -27,10 +23,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getBooks: () => dispatch(bookActions.getBooks())
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BookTable);
+export default connect(mapStateToProps)(BookTable);

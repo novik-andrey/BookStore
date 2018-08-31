@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as bookActions from './actions/index';
 
-class EditBook extends React.Component {
+class AddBook extends React.Component {
 
   
   submitBook(){
@@ -45,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditBook);
+export default connect(mapStateToProps, mapDispatchToProps)(AddBook);

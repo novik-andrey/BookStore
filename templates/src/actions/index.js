@@ -22,6 +22,33 @@ export const getBooks = () => {
   };
 };
 
+export const addBook = (props) => {
+  return (dispatch) => {
+    console.log(props.book)
+    return Axios.post(url, props.book)
+      .then(response => {
+        dispatch(getExistingBooks(response.data.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
+export const makeBook = (name, value) => {
+  return {
+    type: actionTypes.MAKE_BOOK,
+    name,
+    value
+  }
+}
+
+export const clearBook = () => {
+  return {
+    type: actionTypes.clearBook
+  }
+}
+
 export const makeQuery = (query) => {
   return {
     type: actionTypes.MAKE_QUERY,

@@ -8,8 +8,8 @@ class SearchForm extends React.Component {
     const { query, makeQuery } = this.props;
     return (
       <form>
-        <p><label> search<input type="text" name="search" value={query}
-                         onChange={makeQuery}/></label></p>
+        <p><label> search <input type="text" name="search" value={query}
+          onChange={makeQuery}/></label></p>
       </form>
     );
   }

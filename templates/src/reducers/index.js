@@ -10,7 +10,18 @@ const booksReducer = (state = [], action) => {
   }
 }
 
-const queryReducer = (state = [], action) => {
+const makeBookReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actionTypes.MAKE_BOOK:
+      return Object.assign({}, state, {[action.name]: action.value})
+    case actionTypes.CLEAR_BOOK:
+      return {}
+    default:
+      return state
+  }
+}
+
+const queryReducer = (state = '', action) => {
   switch (action.type) {
     case actionTypes.MAKE_QUERY:
       return action.query
@@ -21,5 +32,6 @@ const queryReducer = (state = [], action) => {
 
 export default combineReducers({
   books: booksReducer,
+  book: makeBookReducer,
   query: queryReducer
 });

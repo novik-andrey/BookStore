@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchForm from './searchForm'
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default class tableHeader extends React.Component {
 
@@ -9,7 +9,7 @@ export default class tableHeader extends React.Component {
     return(
       <header>
         <div>Book Store</div>
-        <li><Link to="/edit">New</Link></li>
+        <Link to='/edit'>New</Link>
         <div><SearchForm/></div>
       </header>
     )
