@@ -28,6 +28,8 @@ func main() {
 	router.POST("/books", CreateBook)
 	router.PUT("/books/:id", EditBook)
 	router.DELETE("/books/:id", DeleteBook)
+	router.OPTIONS("/books", OptionsBook)    
+	router.OPTIONS("/books/:id", OptionsBook)
 	router.Run() 
 }
 
@@ -73,7 +75,7 @@ func CreateBook(c *gin.Context) {
 		gin.H{
 			"status": http.StatusCreated, 
 			"message": "Book item created",
-			"data":  bookList,
+			"data": bookList,
 		},
 	)
 }
@@ -91,6 +93,7 @@ func EditBook(c *gin.Context) {
 			gin.H{
 				"status": http.StatusOK, 
 				"message": "book edited",
+				"data": bookList,
 			},
 		)
 	} else {
@@ -114,6 +117,7 @@ func DeleteBook(c *gin.Context) {
 			gin.H{
 				"status": http.StatusOK, 
 				"message": "book deleted",
+				"data": bookList,
 			},
 		)
 	} else {
@@ -152,4 +156,10 @@ func Editor(list []Book, number string, newBook Book) ([]Book, bool) {
 		}
 	}
 	return temp, edited
+}
+
+func OptionsBook(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "DELETE,POST, PUT")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	c.Next()
 }
