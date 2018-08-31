@@ -8,7 +8,7 @@ import (
 type Book struct {
 	Number string	`json:"number"`
 	Name	 string `json:"name"`
-	Author string	`json:"title"`
+	Author string	`json:"author"`
 	Pages	 string	`json:"pages"`
 	Price  string `json:"price"`
 }
@@ -23,15 +23,15 @@ func main() {
 
 	router.LoadHTMLGlob("templates/*.html")
 
-	router.GET("/", startPage)
-	router.GET("/books", getBooks)
-	router.POST("/books", createBook)
-	router.PUT("/books/:id", editBook)
-	router.DELETE("/books/:id", deleteBook)
+	router.GET("/", StartPage)
+	router.GET("/books", GetBooks)
+	router.POST("/books", CreateBook)
+	router.PUT("/books/:id", EditBook)
+	router.DELETE("/books/:id", DeleteBook)
 	router.Run() 
 }
 
-func startPage(c *gin.Context) {
+func StartPage(c *gin.Context) {
 	c.HTML(
 		http.StatusOK,
 		"index.html",
@@ -41,13 +41,13 @@ func startPage(c *gin.Context) {
 	)
 }
 
-func getBooks(c *gin.Context) {
+func GetBooks(c *gin.Context) {
 	if len(bookList) <= 0 {
 		c.JSON(
 			http.StatusNotFound, 
 			gin.H{
 				"status": http.StatusNotFound, 
-				"message": "No todo found!",
+				"message": "No books found!",
 			},
 		)
 	} else {
@@ -61,12 +61,12 @@ func getBooks(c *gin.Context) {
 	}
 }
 
-func createBook(c *gin.Context) {
+func CreateBook(c *gin.Context) {
 
-	var json Book
-	c.BindJSON(&json)
+	var newBook Book
+	c.BindJSON(&newBook)
 
-	bookList = append(bookList, json)
+	bookList = append(bookList, newBook)
 
 	c.JSON(
 		http.StatusCreated, 
@@ -78,17 +78,78 @@ func createBook(c *gin.Context) {
 	)
 }
 
-func editBook(c *gin.Context) {
+func EditBook(c *gin.Context) {
 	bookId := c.Param("id")
-	c.JSON(
-		http.StatusOK, 
-		gin.H{
-			"status": http.StatusOK, 
-			"data": "Привет" + bookId,
-		},
-	)
+	var isEdited bool
+	var newBook Book
+	c.BindJSON(&newBook)
+
+	bookList, isEdited = Editor(bookList, bookId, newBook)
+	if (isEdited) {
+		c.JSON(
+			http.StatusOK, 
+			gin.H{
+				"status": http.StatusOK, 
+				"message": "book edited",
+			},
+		)
+	} else {
+		c.JSON(
+			http.StatusNotFound, 
+			gin.H{
+				"status": http.StatusNotFound, 
+				"message": "no book found",
+			},
+		)
+	}
 }
 
-func deleteBook(c *gin.Context) {
+func DeleteBook(c *gin.Context) {
+	bookId := c.Param("id")
+	var isDeleted bool
+	bookList, isDeleted = Filter(bookList, bookId)
+	if (isDeleted) {
+		c.JSON(
+			http.StatusOK, 
+			gin.H{
+				"status": http.StatusOK, 
+				"message": "book deleted",
+			},
+		)
+	} else {
+		c.JSON(
+			http.StatusNotFound, 
+			gin.H{
+				"status": http.StatusNotFound, 
+				"message": "no book found",
+			},
+		)
+	}
+}
 
+func Filter(list []Book, number string) ([]Book, bool) {
+	temp := make([]Book, 0)
+	deleted := false
+	for _, book := range list {
+		if book.Number != number {
+			temp = append(temp, book)
+		} else {
+			deleted = true
+		}
+	}
+	return temp, deleted
+}
+
+func Editor(list []Book, number string, newBook Book) ([]Book, bool) {
+	temp := make([]Book, 0)
+	edited := false
+	for _, book := range list {
+		if book.Number != number {
+			temp = append(temp, book)
+		} else {
+			temp = append(temp, newBook)
+			edited = true
+		}
+	}
+	return temp, edited
 }
