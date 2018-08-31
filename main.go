@@ -93,6 +93,7 @@ func EditBook(c *gin.Context) {
 			gin.H{
 				"status": http.StatusOK, 
 				"message": "book edited",
+				"data": bookList,
 			},
 		)
 	} else {
@@ -116,6 +117,7 @@ func DeleteBook(c *gin.Context) {
 			gin.H{
 				"status": http.StatusOK, 
 				"message": "book deleted",
+				"data": bookList,
 			},
 		)
 	} else {

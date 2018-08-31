@@ -15,22 +15,15 @@ export const getBooks = () => {
     return Axios.get(url)
       .then(response => {
         dispatch(getExistingBooks(response.data.data))
-      })
-      .catch(error => {
-        throw(error);
       });
   };
 };
 
-export const addBook = (props) => {
+export const addBook = (book) => {
   return (dispatch) => {
-    console.log(props.book)
-    return Axios.post(url, props.book)
+    return Axios.post(url, book)
       .then(response => {
-        dispatch(getExistingBooks(response.data.data))
-      })
-      .catch(error => {
-        throw(error);
+        dispatch(getExistingBooks(response.data.data));
       });
   };
 }
@@ -43,9 +36,34 @@ export const makeBook = (name, value) => {
   }
 }
 
+export const setBook = (book) => {
+  return {
+    type: actionTypes.SET_BOOK,
+    book
+  }
+}
+
+export const editBook = (number, book) => {
+  return (dispatch) => {
+    return Axios.put(url + '/' + number, book)
+      .then(response => {
+        dispatch(getExistingBooks(response.data.data));
+      });
+  };
+}
+
+export const deleteBook = (number) => {
+  return (dispatch) => {
+    return Axios.delete(url + '/' + number)
+      .then(response => {
+        dispatch(getExistingBooks(response.data.data));
+      });
+  };
+}
+
 export const clearBook = () => {
   return {
-    type: actionTypes.clearBook
+    type: actionTypes.CLEAR_BOOK
   }
 }
 

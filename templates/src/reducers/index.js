@@ -14,12 +14,15 @@ const makeBookReducer = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.MAKE_BOOK:
       return Object.assign({}, state, {[action.name]: action.value})
+    case actionTypes.SET_BOOK:
+      return Object.assign({}, action.book)
     case actionTypes.CLEAR_BOOK:
       return {}
     default:
       return state
   }
 }
+
 
 const queryReducer = (state = '', action) => {
   switch (action.type) {

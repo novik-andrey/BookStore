@@ -6,6 +6,7 @@ import thunkMiddleware from 'redux-thunk'
 import { Provider } from 'react-redux';
 import App from './src/app';
 import AddBook from './src/addBook';
+import EditBook from './src/editBook';
 import rootReducer from './src/reducers/index';
 import * as bookActions from './src/actions/index';
 
@@ -22,7 +23,8 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Route exact path='/' component={App}/>
-        <Route path='/edit' component={AddBook}/>
+        <Route path='/add' component={AddBook}/>
+        <Route path='/edit/:number' component={EditBook}/>
       </div>
     </BrowserRouter>
   </Provider>,

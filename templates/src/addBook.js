@@ -7,7 +7,8 @@ class AddBook extends React.Component {
 
   
   submitBook(){
-    this.props.addBook(this.props);
+    this.props.addBook(this.props.book);
+    this.props.clearBook();
   }
 
   render() {
@@ -24,7 +25,7 @@ class AddBook extends React.Component {
           onChange={makeBook}/></label>
         <label> price <input type="text" name="price" value={price}
           onChange={makeBook}/></label>
-        <Link onClick={addBook.bind(this, this.props)} to='/'> Add Book</Link>
+        <Link onClick={this.submitBook.bind(this)} to='/'> Add Book</Link>
         <Link onClick={clearBook} to='/'> Cancel</Link>
       </form>
     );

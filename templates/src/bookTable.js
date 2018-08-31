@@ -8,11 +8,9 @@ class BookTable extends React.Component {
   render() {
     const {books} = this.props;
     return (
-      // <div className="bookTable">
       <ul>
         {books.map(book => <BookRow book={book} />)}
       </ul>
-      // </div>
     )
   }
 }

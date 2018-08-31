@@ -9,7 +9,7 @@ export default class tableHeader extends React.Component {
     return(
       <header>
         <div>Book Store</div>
-        <Link to='/edit'>New</Link>
+        <Link to='/add'>New</Link>
         <div><SearchForm/></div>
       </header>
     )

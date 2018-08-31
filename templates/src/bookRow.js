@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class BookRow extends React.Component {
 
@@ -12,7 +13,7 @@ export default class BookRow extends React.Component {
         <div>author = {author}</div>
         <div>pages = {pages}</div>
         <div>price = {price}</div>  
-        <div><a>edit book</a></div>
+        <Link to={'/edit/' + number}>Edit Book</Link>
       </div>
     )
   }
