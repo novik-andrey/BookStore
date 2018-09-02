@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchForm from './searchForm'
-import { Link } from 'react-router-dom';
+import SearchForm from './searchForm';
+import { Link, Redirect  } from 'react-router-dom';
 
 export default class tableHeader extends React.Component {
 

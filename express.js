@@ -3,8 +3,6 @@ var app = express();
 
 app.get('/', function (req, res) {
   res.sendfile('./templates/index.html');
-  // res.sendfile('./templates/style.css');
-  // res.sendfile('./templates/bundle.js');
 });
 
 app.get('/style.css', function (req, res) {
