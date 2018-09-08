@@ -46,10 +46,11 @@ func StartPage(c *gin.Context) {
 func GetBooks(c *gin.Context) {
 	if len(bookList) <= 0 {
 		c.JSON(
-			http.StatusNotFound, 
+			http.StatusOK, 
 			gin.H{
-				"status": http.StatusNotFound, 
+				"status": http.StatusOK, 
 				"message": "No books found!",
+				"data": bookList,
 			},
 		)
 	} else {

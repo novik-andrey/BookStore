@@ -6,35 +6,55 @@ import * as bookActions from './actions/index';
 class EditBook extends React.Component {
 
   componentDidMount() {
-    let books = this.props.books.filter( book => book.number == this.props.match.params.number)
+    let books = this.props.books.filter(book => book.number == this.props.match.params.number)
     this.props.setBook(books[0]);
   }
 
-  submitBook(){
-    this.props.editBook(this.props.match.params.number, this.props.book);
-    console.log(this.props);
+  submitBook() {
+    if (!this.isBookExist()) {
+      this.props.editBook(this.props.match.params.number, this.props.book);
+      this.props.clearBook();
+      this.props.history.push('/');
+    }
+  }
+
+  removeBook() {
+    this.props.deleteBook(this.props.match.params.number);
     this.props.clearBook();
+    this.props.history.push('/');
+  }
+
+  cancel() {
+    this.props.clearBook();
+    this.props.history.push('/');
+  }
+
+  isBookExist() {
+    return this.props.books.some(book => book.number == this.props.book.number && this.props.book.number != this.props.match.params.number);
   }
 
   render() {
-    const { makeBook, deleteBook, clearBook } = this.props;
+    const { makeBook } = this.props;
     const { number, name, author, pages, price } = this.props.book;
     return (
-      <form>
-        <label> number <input type="text" name="number" value={`${number}`}
-          onChange={makeBook}/></label>
+      <div>
+        <label> number <input type="text" name="number" value={number}
+          onChange={makeBook} /></label>
         <label> name <input type="text" name="name" value={name}
-          onChange={makeBook}/></label>
+          onChange={makeBook} /></label>
         <label> author <input type="text" name="author" value={author}
-          onChange={makeBook}/></label>
+          onChange={makeBook} /></label>
         <label> pages <input type="text" name="pages" value={pages}
-          onChange={makeBook}/></label>
+          onChange={makeBook} /></label>
         <label> price <input type="text" name="price" value={price}
-          onChange={makeBook}/></label>
-        <Link onClick={this.submitBook.bind(this)} to='/'> Save</Link>
-        <Link onClick={deleteBook.bind(this, this.props.match.params.number)} to='/'> Delete</Link>
-        <Link onClick={clearBook} to='/'> Cancel</Link>
-      </form>
+          onChange={makeBook} /></label>
+        <button onClick={this.submitBook.bind(this)}> Save</button>
+        <button onClick={this.removeBook.bind(this)}> Delete</button>
+        <button onClick={this.cancel.bind(this)}> Cancel</button>
+        <div>
+          {this.isBookExist() && <span>A book with this number exists</span>}
+        </div>
+      </div>
     );
   }
 }
